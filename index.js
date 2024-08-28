@@ -3,7 +3,9 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const { app, httpServer } = require("./socket/socket")
 require("dotenv").config()
+const path = require("path")
 // const app = express()
+// console.log(__dirname)
 
 
 
@@ -16,7 +18,10 @@ app.use(cors({ origin: true, credentials: true }))
 app.use("/api/notes", require("./routes/todo.routes"))
 // tep 3 404 routes
 app.use("*", (req, res) => {
-    res.status(404).json({ message: "resource not found 404" })
+
+    // dirname always return absalute path
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
+    // res.status(404).json({ message: "resource not found 404" })
 })
 // tep 4 error handler
 app.use((err, req, res, next) => {
